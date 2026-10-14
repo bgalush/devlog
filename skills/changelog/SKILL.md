@@ -5,7 +5,7 @@ description: "Maintains repository-local changelogs: a high-level index and deta
 
 # Changelog
 
-Maintain a durable, agent-friendly history of project releases in the repository. Structure is a top-level index (`CHANGELOG.md`) and a directory of detailed versioned logs:
+Maintain a durable, agent-friendly history of project releases in the repository. Structure is two parts: A top-level index (`CHANGELOG.md`) and a directory of detailed versioned logs (`changelogs/vX.Y.Z.md`).
 
 ```text
 CHANGELOG.md
@@ -15,35 +15,35 @@ changelogs/
   ...
 ```
 
-1. **`CHANGELOG.md`**: A high-level index. Each entry is a one-line summary of the release and a relative link to the detailed record:
-   `- [v1.1.0](changelogs/v1.1.0.md) — Enhance API security with SigV4 support`
-2. **`changelogs/vX.Y.Z.md`**: Detailed release notes. These should group changes by domain (e.g., "Core Features", "Security", "Fixes") and link back to the `devlog/` records that drove the changes.
+Prefer [Semantic Versioning](https://semver.org/) unless otherwise specified.
 
-`<skill>/templates/v0.0.0-template.md` is included in the skill root. Prefer semantic versioning (`vX.Y.Z`) unless otherwise specified.
+## Index
+
+`CHANGELOG.md` is a high-level index. Each entry is a one-line summary of the release and a relative link to the detailed record.
+
+```text
+- [v1.1.0](changelogs/v1.1.0.md) - Enhance API security with SigV4 support
+```
+
+## Detail
+
+`changelogs/vX.Y.Z.md` contains detailed release notes. The body groups notable changes by domain and links back to the `devlog/` records `ADR-NNN`, `PLAN-NNN`, or `DIG-NNN` that drove the change.
+
+`<skill>/templates/v0.0.0-template.md` is included in the skill root. 
 
 ## Workflow
 
-Changelogs are the final output of the engineering record lifecycle. A feature is considered "shipped" when its corresponding `PLAN` is `Complete` and its highlights are summarized in a versioned changelog.
+Changelogs are the final output of the engineering record lifecycle. A feature is considered shipped when its corresponding `PLAN` is `Complete` and its highlights are summarized in a versioned changelog.
 
 1. **Draft**: When a version is tagged, create a new `changelogs/vX.Y.Z.md` using the template.
 2. **Summarize**: Extract key highlights from completed `PLAN` and `ADR` or `DIG` entries in the `devlog` skill.
 3. **Index**: Add the release summary and link to the top of `CHANGELOG.md`.
-
-
-## Links and References
-
-Entries in the detailed changelog may optionally link back to the `ADR-NNN` or `PLAN-NNN` that drove the change using relative paths:
-
-```markdown
-- Added S3-compatible API ([ADR-018](../devlog/adr/018-sigv4.md))
-```
-
-The `Release:` field in the `ADR`, `PLAN`, or `DIG` should be set to reference the version it was originally released in. Do not rewrite history by updating `Release:` for an existing record.
+4. **Devlog**: The `Release:` field in the `ADR`, `PLAN`, or `DIG` should be set to reference the version it was originally released in. Do not rewrite history by updating `Release:` for an existing record.
 
 ## Verify
 
 - [ ] The release is tagged in git.
-- [ ] `CHANGELOG.md` index is updated with a one-line summary and link.
 - [ ] `changelogs/vX.Y.Z.md` contains detailed notes grouped by domain.
-- [ ] All entries link back to the relevant `ADR`, `PLAN` or `DIG` in the `devlog/`.
+- [ ] `CHANGELOG.md` index is updated with a one-line summary and link.
+- [ ] All entries link back to the relevant `ADR`, `PLAN` or `DIG` in the `devlog/`, and each record's `Release:` is updated.
 - [ ] Relative paths are correct and functional.

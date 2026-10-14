@@ -7,8 +7,10 @@ artifacts:
 # DIG-NNN: Title
 
 Status: Open
+
 Release: v0.0.0
-Question: one-sentence question this investigation answers
+
+## Question
 
 ## Approach
 

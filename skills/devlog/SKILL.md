@@ -1,6 +1,6 @@
 ---
 name: devlog
-description: "Creates and maintains repository devlogs: ADRs for decisions, PLANs for tracking work, DIGs for research. Use when recording architecture, design rationale, implementation plans, progress, findings, investigations, or other devlog updates. Required in Plan mode."
+description: "Creates and maintains repository devlogs: ADRs for decisions, PLANs for tracking work, DIGs for research. Use when recording architecture, design rationale, implementation plans, progress, findings, investigations, debugging, root cause analysis, issue triage, or other devlog updates. Required in Plan mode."
 ---
 
 # Devlog
@@ -11,7 +11,7 @@ Keep durable engineering records in a repository-local `devlog/`:
 | :--- | :--- | :--- |
 | ADR | `devlog/adr/` | Decision has lasting architectural, security, data-model, API, or operational impact; trade-offs matter to future maintainers; reversal is costly. |
 | PLAN | `devlog/plan/` | Work spans multiple phases, subsystems, or releases; requires high-level progress tracking beyond individual issues. |
-| DIG | `devlog/dig/` | Researching feasibility, root causes, option comparisons, test runs. A spike; too substantial for an ADR footnote; requires durable evidence/sources. |
+| DIG | `devlog/dig/` | A spike; Researching feasibility, root cause, complex debugging, issue triage, option comparisons, test runs. Too substantial for an ADR footnote, or requires durable evidence/sources. |
 
 Records use 3-digit numbering and kebab-case titles: `devlog/<type>/NNN-title.md`.
 
