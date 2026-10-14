@@ -2,7 +2,7 @@
 
 Status: Not Started
 
-Release: v0.0.0
+Release: Unreleased
 
 Related: [ADR-NNN](../adr/NNN-title.md)
 
@@ -10,6 +10,6 @@ Related: [ADR-NNN](../adr/NNN-title.md)
 
 ## Phase 1: Title
 
-**Status:** Not Started
+Status: Not Started
 
 ## Findings

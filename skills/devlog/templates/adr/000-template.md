@@ -2,7 +2,7 @@
 
 Status: Proposed
 
-Release: v0.0.0
+Release: Unreleased
 
 Related: [PLAN-NNN](../plan/NNN-title.md)
 

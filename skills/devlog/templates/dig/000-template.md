@@ -8,7 +8,9 @@ artifacts:
 
 Status: Open
 
-Release: v0.0.0
+Release: Unreleased
+
+Related: [ADR-NNN](../adr/NNN-title.md)
 
 ## Question
 

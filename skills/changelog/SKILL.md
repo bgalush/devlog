@@ -1,6 +1,6 @@
 ---
 name: changelog
-description: "Maintains repository-local changelogs: a high-level index and detailed versioned records. Use when performing releases, tagging versions, and summarizing completed work, or when exploring historical release notes. Required before finalizing completed work. Intended to complement the `devlog` skill."
+description: "Maintains repository-local changelogs: a high-level index and detailed versioned records. Use when cutting releases, tagging versions, writing release notes, or exploring historical release notes. Intended to complement the `devlog` skill."
 ---
 
 # Changelog
@@ -29,7 +29,7 @@ Prefer [Semantic Versioning](https://semver.org/) unless otherwise specified.
 
 `changelogs/vX.Y.Z.md` contains detailed release notes. The body groups notable changes by domain and links back to the `devlog/` records `ADR-NNN`, `PLAN-NNN`, or `DIG-NNN` that drove the change.
 
-`<skill>/templates/v0.0.0-template.md` is included in the skill root. 
+**Template:** `<skill>/templates/v0.0.0-template.md`
 
 ## Workflow
 
@@ -38,12 +38,12 @@ Changelogs are the final output of the engineering record lifecycle. A feature i
 1. **Draft**: When a version is tagged, create a new `changelogs/vX.Y.Z.md` using the template.
 2. **Summarize**: Extract key highlights from completed `PLAN` and `ADR` or `DIG` entries in the `devlog` skill.
 3. **Index**: Add the release summary and link to the top of `CHANGELOG.md`.
-4. **Devlog**: The `Release:` field in the `ADR`, `PLAN`, or `DIG` should be set to reference the version it was originally released in. Do not rewrite history by updating `Release:` for an existing record.
+4. **Devlog**: Set `Release:` from `Unreleased` to `vX.Y.Z` on each `ADR`, `PLAN`, or `DIG` shipped in this release. Never overwrite an existing version in `Release:` on records from prior releases.
 
 ## Verify
 
 - [ ] The release is tagged in git.
 - [ ] `changelogs/vX.Y.Z.md` contains detailed notes grouped by domain.
 - [ ] `CHANGELOG.md` index is updated with a one-line summary and link.
-- [ ] All entries link back to the relevant `ADR`, `PLAN` or `DIG` in the `devlog/`, and each record's `Release:` is updated.
+- [ ] Entries driven by a devlog record link back to the relevant `ADR`, `PLAN`, or `DIG`, and newly shipped records have `Release:` set to `vX.Y.Z`.
 - [ ] Relative paths are correct and functional.

@@ -1,6 +1,6 @@
 ---
 name: devlog
-description: "Creates and maintains repository devlogs: ADRs for decisions, PLANs for tracking work, DIGs for research. Use when recording architecture, design rationale, implementation plans, progress, findings, investigations, debugging, root cause analysis, issue triage, or other devlog updates. Required in Plan mode."
+description: "Creates and maintains repository devlogs: ADRs for decisions, PLANs for tracking work, DIGs for research. Use when recording architecture, design rationale, implementation plans, progress, findings, investigations, debugging, root cause analysis, issue triage, or other devlog updates. Consult in Plan mode when work spans multiple phases, architectural decisions, or substantive investigations."
 ---
 
 # Devlog
@@ -22,21 +22,23 @@ devlog/dig/NNN-title.md
 devlog/artifacts/*
 ```
 
-Sequences are independent per type, and local to the repository.
+Sequences are independent per type and local to the repository. Start at `001` and increment from the highest existing number in that directory; never reuse retired or superseded numbers.
 
-## Links and References
+## Header Fields and Links
 
-When referencing records in prose, use the hyphenated identifier everywhere: `ADR-012`, `PLAN-008`, `DIG-003` and link every reference with a relative path:
+When referencing records in prose, use the hyphenated identifier everywhere (`ADR-012`, `PLAN-008`, `DIG-003`) and link every reference with a relative path:
 
 ```markdown
 [ADR-012](../adr/012-storage-layout.md)
 ```
 
-Related records are linked via relationship fields in the record header. Use relative paths to link to related records.
+Records carry metadata and relative links in their header block:
 
 | Field | Description |
 | :--- | :--- |
-| `Related:` | Non-ordering context, especially the ADR/PLAN pair for one initiative. |
+| `Status:` | Required lifecycle state from the record type's table below. |
+| `Release:` | Set to `Unreleased` when created; set once to `vX.Y.Z` when shipped in a tagged release. Never overwrite an existing version tag. |
+| `Related:` | Non-ordering context, especially the ADR/PLAN/DIG records for one initiative. |
 | `Depends On:` | Prerequisite decisions or work that must hold first. |
 | `Supersedes:` / `Superseded By:` | Revision of prior work, revised architecture, or new research. The reverse link belongs on the replaced record. |
 
@@ -52,6 +54,7 @@ Architecture Decision Records document lasting choices. Create an ADR *and* a PL
 | `Accepted` | Decided, not yet implemented |
 | `Declined` | Not accepted or related to cancelled work |
 | `Implemented` | Shipped and representative of the system |
+| `Superseded` | Replaced by a newer ADR (requires `Superseded By:`) |
 
 ## PLAN
 
@@ -65,6 +68,7 @@ Plans track the progress of a high-level body of work, often associated with one
 | `In Progress` | Work is currently being performed |
 | `Complete` | Goal has been reached |
 | `Abandoned` | Stopped intentionally without completion |
+| `Superseded` | Replaced by a newer PLAN (requires `Superseded By:`) |
 
 ## DIG
 
@@ -74,7 +78,7 @@ DIGs capture research questions and findings. Do not create a new DIG for one-of
 2. **Reproducible Steps:** Record the commands or procedure that reproduce the data or result. Prefer small `uv run`-able scripts with PEP 723 inline dependencies.
 3. **Project-External Storage:** Use the object storage, data store, or dataset registry the project already relies on, and reference the exact location in the DIG.
 
-Research may generate artifacts such as JSON or CSV blobs, screenshots, PDFs, visualizations, scripts, documentation, test results, or raw notes. Avoid committing large or binary files; if these absolutely must be committed, put them in the part of the repository that owns that kind of file, or under `devlog/artifacts/`. All files derived from or depended on by the DIG must be referenced in the DIG's `artifacts` frontmatter.
+Research may generate artifacts such as JSON or CSV blobs, screenshots, PDFs, visualizations, scripts, documentation, test results, or raw notes. Avoid committing large or binary files; if these absolutely must be committed, put them in the part of the repository that owns that kind of file, or under `devlog/artifacts/`. List any repository files derived from or depended on by the DIG in its `artifacts` YAML frontmatter; omit the frontmatter when there are none.
 
 **Template:** `<skill>/templates/dig/000-template.md`
 
@@ -83,16 +87,10 @@ Research may generate artifacts such as JSON or CSV blobs, screenshots, PDFs, vi
 | `Open` | Not yet started, or is in progress |
 | `Closed` | Research concluded, results recorded |
 
-## Best Practices
-
-- **Agent Context:** Maintain a high-density "Design Status Overview" in the project's `AGENTS.md` referencing key ADRs and PLANs to provide a fast-path for agents to grasp the architectural state.
-- **Temporal Anchoring:** Set the `Release:` field in every record to the version tag it was **originally committed in** to avoid applying stale rationale to new code.
-
 ## Verify
 
 - [ ] `NNN` was rechecked against filenames and headings immediately before writing.
 - [ ] Filename, H1, and every reference use the same identifier, linked by relative path.
 - [ ] Status is one value from the documented lifecycle and matches reality.
-- [ ] Supersessions and amendments are linked both ways; devlog indexes are updated.
+- [ ] Supersessions and amendments are linked both ways.
 - [ ] Preserve history: Do not rewrite an old record as though the new state had always been true.
-- [ ] AGENTS.md is updated to reflect the current design status.
